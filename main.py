@@ -33,7 +33,9 @@ async def cupdo(ctx, *args):
         else:
             exstring += i.upper()
             is_up= not is_up
-    await ctx.send(content=exstring)
+    await ctx.message.delete()
+    #await ctx.send(content="From {0}({1})\n{2}".format(ctx.message.author.display_name, ctx.message.author, exstring))
+    await ctx.send(embed=discord.Embed(description=exstring).set_author(name="{0}({1})".format(ctx.message.author.display_name, ctx.message.author),icon_url=ctx.message.author.avatar_url))
 
 @bot.command(help="", description="", aliases=["погода", "Погода", "цуерук"])
 async def weather(ctx, *args):
