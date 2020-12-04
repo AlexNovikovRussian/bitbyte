@@ -12,6 +12,12 @@ config_dict = get_default_config()
 config_dict['language'] = 'ru'
 owm = OWM('d5cefe4e77e8e08ca203715b718cddde', config_dict)
 mgr = owm.weather_manager()
+TARGET = 3
+
+mute_nick = None
+mute_msg = None
+muting = False
+mute_reacts = [0,0]
 
 bot = commands.Bot(command_prefix='%', description="Бот нашего сервера для разных приколов с написанием текста")
 
@@ -64,7 +70,29 @@ async def rub(ctx, *args):
         except KeyError:
             await ctx.send(embed=discord.Embed(title="404 - " + arg1, description="Такая валюта не найдена", timestamp=datetime.datetime.now()))
             
+@bot.command(help="Пишет текст наоборот", usage="[исходный текст]", description="", aliases=["кумукыу", "реверс"])
+async def reverse(ctx, *args):
+    string = ""
+    for st in args:
+        string +=st+" "
     
+    string = list(string)
+    string.reverse()
+    ex = "".join(string)
+
+    await ctx.message.delete()
+    await ctx.send(embed=discord.Embed(description=ex).set_author(name="{0}({1})".format(ctx.message.author.display_name, ctx.message.author),icon_url=ctx.message.author.avatar_url))
+
+@bot.command(help="Мут по голосованию", usage="[ник]", description="", aliases=["мут", "ьгеу", "ьге", "mut"])
+async def mute(ctx, *args):
+    mute_nick = args[0]
+
+    mute_msg = ctx.send("Голосование за мут участника **{0}**")
+    mute_msg.add_reaction("<:correct:784434578424725535>")
+    mute_msg.add_reaction("<:incorrect:714834242525331498>")
+    muting = True
+
+
 
 bot.run("NzY4MDI4Mzk5MjEzNDc3ODkw.X46gLw.xiXUtgD8nmLJPNUP4YY2_r_goTc")
  
