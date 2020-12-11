@@ -7,6 +7,7 @@ import requests
 import json
 import datetime
 from discord.utils import get
+from os import environ as env
 
 
 config_dict = get_default_config()
@@ -14,7 +15,7 @@ config_dict['language'] = 'ru'
 owm = OWM('d5cefe4e77e8e08ca203715b718cddde', config_dict)
 mgr = owm.weather_manager()
 
-TARGET = 2
+TARGET = 3
 PREFIX = "%"
 
 class Voicing():
@@ -208,7 +209,7 @@ class Bot(discord.Client):
                     await reaction.message.channel.send("no unmute")
 
 bot = Bot()
-bot.run("NzY4MDI4Mzk5MjEzNDc3ODkw.X46gLw.xiXUtgD8nmLJPNUP4YY2_r_goTc")
+bot.run(env["DSICORD_TOKEN"])
 
 
 
